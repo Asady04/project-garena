@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      red_idle_3.PNG_0: -8906644396256933043
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
