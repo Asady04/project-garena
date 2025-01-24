@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlatformController : MonoBehaviour
 {
@@ -10,11 +12,17 @@ public class PlatformController : MonoBehaviour
     private Transform targetPlatform;  // Current platform to move towards
     private bool shouldMove = false;  // Movement control
     public int platformIndexToStart = 0;  // Starting platform index
+    public bool isInputEnabled = true;
+    public List<int> move;  
+    BlueController blueController;
+    
 
     void Start()
     {
+        move = new List<int>{};
         targetPlatform = platform[platformIndexToStart];
         character.position = new Vector3(targetPlatform.position.x, character.position.y, character.position.z);
+        blueController = FindFirstObjectByType<BlueController>();
     }
 
     void Update()
@@ -34,30 +42,43 @@ public class PlatformController : MonoBehaviour
             {
                 shouldMove = false;
             }
+            
         }
 
-        // Input to move left or right
-        if (Input.GetKeyUp(KeyCode.A))
+        if (isInputEnabled)
         {
-            MoveToPlatformLeft();
+            // Input to move left or right
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                isInputEnabled = false;
+                MoveToPlatformLeft();
+                blueController.Move();
+                StartCoroutine(DelayBeforeNextInput());
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                isInputEnabled = false;
+                MoveToPlatformRight();
+                blueController.Move();
+                StartCoroutine(DelayBeforeNextInput());
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            MoveToPlatformRight();
-        }
+
     }
 
     public void MoveToPlatformLeft()
     {
         if (platformIndexToStart > 0)
         {
+            move.Add(0);
             platformIndexToStart--;
             targetPlatform = platform[platformIndexToStart];
             shouldMove = true;
         }
     }
 
-    public void AfterTP(int index){
+    public void AfterTP(int index)
+    {
         platformIndexToStart = index;
         targetPlatform = platform[platformIndexToStart];
         shouldMove = true;
@@ -66,9 +87,19 @@ public class PlatformController : MonoBehaviour
     {
         if (platformIndexToStart < platform.Length - 1)
         {
+            move.Add(1);
             platformIndexToStart++;
             targetPlatform = platform[platformIndexToStart];
             shouldMove = true;
         }
+    }
+
+    IEnumerator DelayBeforeNextInput()
+    {
+        // Wait for the specified delay time
+        yield return new WaitForSeconds(1f);
+
+        // Call the method you want to execute after the delay
+        isInputEnabled = true;
     }
 }

@@ -12,7 +12,8 @@ public class CharacterController : MonoBehaviour
         platformController = FindFirstObjectByType<PlatformController>();
         rb = GetComponent<Rigidbody2D>();
     }
-    private void OnCollisionExit2D(Collision2D other) {
+    private void OnCollisionExit2D(Collision2D other)
+    {
         if (other.gameObject.CompareTag("Portal"))
         {
             hasTeleported = false;
@@ -37,6 +38,7 @@ public class CharacterController : MonoBehaviour
                 Teleport(portal);
             }
         }
+
     }
 
     void Jump(float jumpForce)
@@ -59,7 +61,7 @@ public class CharacterController : MonoBehaviour
     {
         if (!portal.destinationPortal.isTeleporting)
         {
-            
+
             platformController.AfterTP(portal.destinationPortal.platformIndex);
             // Mark the destination portal as teleporting
             portal.destinationPortal.destinationPortal.isTeleporting = true;
