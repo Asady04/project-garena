@@ -5,6 +5,10 @@ public class BlueController : MonoBehaviour
 {
     public int countBeforeMoving = 0;
     int indexMoving = 0;
+    private Rigidbody2D rb2d;
+    private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCol2d;
+    private Animator animator;
     PlatformController platformController;
     int platformIndex;
     private Transform targetPlatform;
@@ -14,6 +18,10 @@ public class BlueController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCol2d = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
         platformController = FindFirstObjectByType<PlatformController>();
         platformIndex = platformController.platformIndexToStart;
         moveSpeed = platformController.moveSpeed;
@@ -44,6 +52,13 @@ public class BlueController : MonoBehaviour
     {
         countBeforeMoving--;
         tmpText.text = countBeforeMoving.ToString();
+        if (countBeforeMoving == 0)
+        {
+            spriteRenderer.enabled = true;
+            boxCol2d.enabled = true;
+            animator.enabled = true;
+            rb2d.gravityScale = 1f;
+        }
         if (countBeforeMoving < 0)
         {
             if (platformController.move[indexMoving] == 0)
