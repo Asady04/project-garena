@@ -2,13 +2,7 @@ using UnityEngine;
 
 public class OneTimeController : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
     private bool crack = false;
-
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
     void OnCollisionExit2D(Collision2D col)
     {
@@ -17,7 +11,6 @@ public class OneTimeController : MonoBehaviour
             if (!crack)
             {
                 crack = true;
-                spriteRenderer.color = new Color(1f, 0.6f, 0f);
             }
         }
     }

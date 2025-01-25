@@ -118,6 +118,6 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator DelayBeforeCheck()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
     }
 }
