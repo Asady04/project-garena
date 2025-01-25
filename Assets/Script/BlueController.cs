@@ -10,7 +10,7 @@ public class BlueController : MonoBehaviour
     private BoxCollider2D boxCol2d;
     private Animator animator;
     PlatformController platformController;
-    int platformIndex;
+    public int platformIndex;
     private Transform targetPlatform;
     private bool shouldMove = false;
     float moveSpeed;

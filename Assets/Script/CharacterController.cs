@@ -53,11 +53,22 @@ public class CharacterController : MonoBehaviour
     void Boost(int pistonForce)
     {
         // Update platform index safely
-        platformController.platformIndexToStart = Mathf.Clamp(
+        if (isBlue)
+        {
+            blueController.platformIndex = Mathf.Clamp(
+            blueController.platformIndex + pistonForce,
+            0,
+            platformController.platform.Length - 1
+            );
+        }
+        else
+        {
+            platformController.platformIndexToStart = Mathf.Clamp(
             platformController.platformIndexToStart + pistonForce,
             0,
             platformController.platform.Length - 1
-        );
+            );
+        }
     }
 
     void Teleport(PortalController portal)

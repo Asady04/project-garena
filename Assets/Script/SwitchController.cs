@@ -4,7 +4,7 @@ public class SwitchController : MonoBehaviour
 {
     private SwitchPlatController spc;
     private SpriteRenderer spriteRenderer;
-    private bool state = false;
+    private int playerColCount = 0;
 
     void Start()
     {
@@ -16,19 +16,26 @@ public class SwitchController : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            if (state)
-            {
-                spc.boxCol2d.enabled = false;
-                spc.spriteRenderer.color = new Color(0.125f, 0.125f, 0.125f);
-                state = false;
-                spriteRenderer.color = new Color(0f, 0.4f, 0f);
-            }
-            else
+            playerColCount++;
+            if (playerColCount == 1)
             {
                 spc.boxCol2d.enabled = true;
                 spc.spriteRenderer.color = new Color(0.4f, 0.4f, 0.4f);
-                state = true;
                 spriteRenderer.color = new Color(0f, 1f, 0f);
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D col2d)
+    {
+        if (col2d.gameObject.CompareTag("Player"))
+        {
+            playerColCount--;
+            if (playerColCount == 0)
+            {
+                spc.boxCol2d.enabled = false;
+                spc.spriteRenderer.color = new Color(0.125f, 0.125f, 0.125f);
+                spriteRenderer.color = new Color(0f, 0.4f, 0f);
             }
         }
     }
