@@ -2041,7 +2041,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countBeforeMoving: 5
-  platformIndex: 0
   tmpText: {fileID: 142657541}
 --- !u!1001 &1140709541
 PrefabInstance:
@@ -3175,7 +3174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationPortal: {fileID: 820468721}
   isTeleporting: 0
-  platformIndex: 6
+  platformIndex: 10
 --- !u!4 &1939600474 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7664162997253305535, guid: 34d2830f9625bc0428c0725bd48bdae2, type: 3}
