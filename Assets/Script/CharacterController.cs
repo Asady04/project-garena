@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
@@ -41,7 +42,21 @@ public class CharacterController : MonoBehaviour
                 Teleport(portal);
             }
         }
-
+        else if (collision.gameObject.CompareTag("Blue Post"))
+        {
+            if (isBlue)
+            {
+                blueController.stop = true;
+            }
+        }
+        else if (collision.gameObject.CompareTag("Red Post"))
+        {
+            StartCoroutine(DelayBeforeCheck());
+            if (!isBlue && blueController.stop)
+            {
+                platformController.stop = true;
+            }
+        }
     }
 
     void Jump(float jumpForce)
@@ -100,5 +115,9 @@ public class CharacterController : MonoBehaviour
             // Mark as teleported to prevent immediate re-teleportation
             hasTeleported = true;
         }
+    }
+    IEnumerator DelayBeforeCheck()
+    {
+        yield return new WaitForSeconds(0.5f);
     }
 }

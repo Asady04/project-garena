@@ -13,13 +13,14 @@ public class PlatformController : MonoBehaviour
     private bool shouldMove = false;  // Movement control
     public int platformIndexToStart = 0;  // Starting platform index
     public bool isInputEnabled = true;
-    public List<int> move;  
+    public bool stop = false;
+    public List<int> move;
     BlueController blueController;
-    
+
 
     void Start()
     {
-        move = new List<int>{};
+        move = new List<int> { };
         targetPlatform = platform[platformIndexToStart];
         character.position = new Vector3(targetPlatform.position.x, character.position.y, character.position.z);
         blueController = FindFirstObjectByType<BlueController>();
@@ -42,7 +43,6 @@ public class PlatformController : MonoBehaviour
             {
                 shouldMove = false;
             }
-            
         }
 
         if (isInputEnabled)
@@ -51,16 +51,22 @@ public class PlatformController : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.A))
             {
                 isInputEnabled = false;
-                MoveToPlatformLeft();
-                blueController.Move();
-                StartCoroutine(DelayBeforeNextInput());
+                if (!stop)
+                {
+                    MoveToPlatformLeft();
+                    blueController.Move();
+                    StartCoroutine(DelayBeforeNextInput());
+                }
             }
             else if (Input.GetKeyUp(KeyCode.D))
             {
                 isInputEnabled = false;
-                MoveToPlatformRight();
-                blueController.Move();
-                StartCoroutine(DelayBeforeNextInput());
+                if (!stop)
+                {
+                    MoveToPlatformRight();
+                    blueController.Move();
+                    StartCoroutine(DelayBeforeNextInput());
+                }
             }
         }
 
