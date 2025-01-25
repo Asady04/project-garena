@@ -76,4 +76,11 @@ public class BlueController : MonoBehaviour
             indexMoving++;
         }
     }
+
+    public void AfterTP(int index)
+    {
+        platformIndex = index;
+        targetPlatform = platformController.platform[platformIndex];
+        shouldMove = true;
+    }
 }

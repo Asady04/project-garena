@@ -5,11 +5,14 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D rb; // Reference to the character's Rigidbody2D
     public bool hasTeleported = false;
     private PlatformController platformController;
+    private BlueController blueController;
+    public bool isBlue;
 
     void Start()
     {
         // Get references
         platformController = FindFirstObjectByType<PlatformController>();
+        blueController = FindFirstObjectByType<BlueController>();
         rb = GetComponent<Rigidbody2D>();
     }
     private void OnCollisionExit2D(Collision2D other)
@@ -61,8 +64,16 @@ public class CharacterController : MonoBehaviour
     {
         if (!portal.destinationPortal.isTeleporting)
         {
+            if (isBlue)
+            {
+                blueController.AfterTP(portal.destinationPortal.platformIndex);
 
-            platformController.AfterTP(portal.destinationPortal.platformIndex);
+            }
+            else
+            {
+                platformController.AfterTP(portal.destinationPortal.platformIndex);
+            }
+
             // Mark the destination portal as teleporting
             portal.destinationPortal.destinationPortal.isTeleporting = true;
             // Teleport character to destination portal
