@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonSpriteChanger : MonoBehaviour
 {
     public Image img;
     public Sprite[] nums;
+    private string sceneStage;
     private RectTransform rectTransform;
     private LevelManager lvlMng;
     void Start()
@@ -13,6 +15,7 @@ public class ButtonSpriteChanger : MonoBehaviour
         lvlMng = FindFirstObjectByType<LevelManager>();
         for (int i = 0; i < lvlMng.holdlvl; i++)
         {
+            sceneStage = $"Stage{i+1}";
             float targetY = -i * 275;
             if (rectTransform.anchoredPosition.y == targetY)
             {
@@ -20,5 +23,9 @@ public class ButtonSpriteChanger : MonoBehaviour
                 break;
             }
         }
+    }
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(sceneStage);
     }
 }
