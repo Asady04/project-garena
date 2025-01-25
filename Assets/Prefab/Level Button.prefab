@@ -143,6 +143,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c540fd59ae5d34049be504c9182e67fa, type: 3}
   - {fileID: 21300000, guid: 635600e8cb2ca8a42ac73a9bd67b6ec9, type: 3}
   - {fileID: 21300000, guid: 8b6d1c64d2277db49880a086f0ff3fd0, type: 3}
+  - {fileID: 21300000, guid: 9655c94ee7fb5604d87a2400df460022, type: 3}
 --- !u!114 &3411316485720624618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,4 +217,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3411316485720624618}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7931173106858465554}
+        m_TargetAssemblyTypeName: ButtonSpriteChanger, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

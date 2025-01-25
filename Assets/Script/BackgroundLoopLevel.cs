@@ -31,7 +31,7 @@ public class BackgroundLoopLevel : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             float dragAmount = Input.GetAxis("Mouse Y") * scrollSpeed * Time.deltaTime;
-            if (button[lvlMng.holdlvl - 1].position.y >= -10 && dragAmount > 0 || button[0].position.y <= 5 && dragAmount < 0)
+            if (button[lvlMng.holdlvl - 1].position.y >= -5 && dragAmount > 0 || button[0].position.y <= 5 && dragAmount < 0)
             {
                 return;
             }
