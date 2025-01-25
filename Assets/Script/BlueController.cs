@@ -26,6 +26,7 @@ public class BlueController : MonoBehaviour
         platformController = FindFirstObjectByType<PlatformController>();
         platformIndex = platformController.platformIndexToStart;
         moveSpeed = platformController.moveSpeed;
+        tmpText.text = countBeforeMoving.ToString();
     }
 
     // Update is called once per frame
@@ -53,7 +54,6 @@ public class BlueController : MonoBehaviour
         if (!stop)
         {
             countBeforeMoving--;
-            tmpText.text = countBeforeMoving.ToString();
             if (countBeforeMoving == 0)
             {
                 spriteRenderer.enabled = true;
@@ -63,6 +63,7 @@ public class BlueController : MonoBehaviour
             }
             if (countBeforeMoving < 0)
             {
+                tmpText.text = "0";
                 if (platformController.move[indexMoving] == 0)
                 {
                     platformIndex--;
@@ -76,6 +77,10 @@ public class BlueController : MonoBehaviour
                     shouldMove = true;
                 }
                 indexMoving++;
+            }
+            else
+            {
+                tmpText.text = countBeforeMoving.ToString();
             }
         }
     }
