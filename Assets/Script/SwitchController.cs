@@ -19,7 +19,7 @@ public class SwitchController : MonoBehaviour
             playerColCount++;
             if (playerColCount == 1)
             {
-                spc.boxCol2d.enabled = true;
+                spc.boxCol2d.enabled = !spc.boxCol2d.enabled;
                 spc.spriteRenderer.color = new Color(0.4f, 0.4f, 0.4f);
                 if (spriteRenderer!= null && spriteON != null)
                 {
@@ -36,7 +36,7 @@ public class SwitchController : MonoBehaviour
             playerColCount--;
             if (playerColCount == 0)
             {
-                spc.boxCol2d.enabled = false;
+                spc.boxCol2d.enabled = !spc.boxCol2d.enabled;
                 spc.spriteRenderer.color = new Color(0.125f, 0.125f, 0.125f);
                 if (spriteRenderer!= null && spriteOFF != null)
                 {

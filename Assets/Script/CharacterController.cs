@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour
     private PlatformController platformController;
     private BlueController blueController;
     public bool isBlue;
+    private SoundManager soundManager;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class CharacterController : MonoBehaviour
         platformController = FindFirstObjectByType<PlatformController>();
         blueController = FindFirstObjectByType<BlueController>();
         rb = GetComponent<Rigidbody2D>();
+        soundManager = FindFirstObjectByType<SoundManager>();
     }
     private void OnCollisionExit2D(Collision2D other)
     {
@@ -55,6 +57,7 @@ public class CharacterController : MonoBehaviour
             if (!isBlue && blueController.stop)
             {
                 platformController.stop = true;
+                soundManager.Win();
             }
         }
     }
@@ -62,6 +65,7 @@ public class CharacterController : MonoBehaviour
     void Jump(float jumpForce)
     {
         // Apply upward force for the jump
+        soundManager.Trampoline();
         rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
     }
 
@@ -99,7 +103,7 @@ public class CharacterController : MonoBehaviour
             {
                 platformController.AfterTP(portal.destinationPortal.platformIndex);
             }
-
+            soundManager.Portal();
             // Mark the destination portal as teleporting
             portal.destinationPortal.destinationPortal.isTeleporting = true;
             // Teleport character to destination portal

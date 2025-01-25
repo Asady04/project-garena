@@ -27,12 +27,12 @@ public class BlueController : MonoBehaviour
         platformIndex = platformController.platformIndexToStart;
         moveSpeed = platformController.moveSpeed;
         tmpText.text = countBeforeMoving.ToString();
+        animator.SetBool("isWalking", false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("blue" + platformIndex);
         if (shouldMove && targetPlatform != null)
         {
             // Move character towards the target platform
@@ -43,6 +43,10 @@ public class BlueController : MonoBehaviour
             );
 
             // Stop moving when close enough
+            if (Mathf.Abs(gameObject.transform.position.x - targetPlatform.position.x) < 0.1f)
+            {
+                animator.SetBool("isWalking", false); // Stop walking animation
+            }
             if (Vector3.Distance(gameObject.transform.position, targetPlatform.position) < 0.1f)
             {
                 shouldMove = false;
@@ -66,15 +70,25 @@ public class BlueController : MonoBehaviour
                 tmpText.text = "0";
                 if (platformController.move[indexMoving] == 0)
                 {
-                    platformIndex--;
-                    targetPlatform = platformController.platform[platformIndex];
-                    shouldMove = true;
+                    if (platformIndex > 0)
+                    {
+                        animator.SetBool("isWalking", true);
+                        platformIndex--;
+                        targetPlatform = platformController.platform[platformIndex];
+                        shouldMove = true;
+                    }
+
                 }
                 if (platformController.move[indexMoving] == 1)
                 {
-                    platformIndex++;
-                    targetPlatform = platformController.platform[platformIndex];
-                    shouldMove = true;
+                    if (platformIndex < platformController.platform.Length - 1)
+                    {
+                        animator.SetBool("isWalking", true);
+                        platformIndex++;
+                        targetPlatform = platformController.platform[platformIndex];
+                        shouldMove = true;
+                    }
+
                 }
                 indexMoving++;
             }

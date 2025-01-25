@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
@@ -15,20 +14,22 @@ public class PlatformController : MonoBehaviour
     public bool isInputEnabled = true;
     public bool stop = false;
     public List<int> move;
-    BlueController blueController;
-
+    private BlueController blueController;
+    public Animator animator;
+    private SoundManager soundManager;
 
     void Start()
     {
-        move = new List<int> { };
+        move = new List<int>();
         targetPlatform = platform[platformIndexToStart];
         character.position = new Vector3(targetPlatform.position.x, character.position.y, character.position.z);
         blueController = FindFirstObjectByType<BlueController>();
+        animator.SetBool("isWalking", false);
+        soundManager = FindFirstObjectByType<SoundManager>();
     }
 
     void Update()
     {
-        Debug.Log(platformIndexToStart);
         if (shouldMove && targetPlatform != null)
         {
             // Move character towards the target platform
@@ -39,6 +40,11 @@ public class PlatformController : MonoBehaviour
             );
 
             // Stop moving when close enough
+            if (Mathf.Abs(character.position.x - targetPlatform.position.x) < 0.1f)
+            {
+                animator.SetBool("isWalking", false); // Stop walking animation
+            }
+
             if (Vector3.Distance(character.position, targetPlatform.position) < 0.1f)
             {
                 shouldMove = false;
@@ -69,15 +75,35 @@ public class PlatformController : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void MoveToPlatformLeft()
     {
         if (platformIndexToStart > 0)
         {
+            // Start walking animation
+            animator.SetBool("isWalking", true);
+            soundManager.Walk();
+
+            // Prepare for movement
             move.Add(0);
             platformIndexToStart--;
+            targetPlatform = platform[platformIndexToStart];
+            shouldMove = true;
+        }
+    }
+
+    public void MoveToPlatformRight()
+    {
+        if (platformIndexToStart < platform.Length - 1)
+        {
+            // Start walking animation
+            animator.SetBool("isWalking", true);
+            soundManager.Walk();
+
+            // Prepare for movement
+            move.Add(1);
+            platformIndexToStart++;
             targetPlatform = platform[platformIndexToStart];
             shouldMove = true;
         }
@@ -89,23 +115,13 @@ public class PlatformController : MonoBehaviour
         targetPlatform = platform[platformIndexToStart];
         shouldMove = true;
     }
-    public void MoveToPlatformRight()
-    {
-        if (platformIndexToStart < platform.Length - 1)
-        {
-            move.Add(1);
-            platformIndexToStart++;
-            targetPlatform = platform[platformIndexToStart];
-            shouldMove = true;
-        }
-    }
 
     IEnumerator DelayBeforeNextInput()
     {
         // Wait for the specified delay time
         yield return new WaitForSeconds(1f);
 
-        // Call the method you want to execute after the delay
+        // Re-enable input
         isInputEnabled = true;
     }
 }
