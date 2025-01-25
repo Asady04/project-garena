@@ -11,6 +11,8 @@ TagManager:
   - Portal
   - Empty
   - OneTime
+  - Blue Post
+  - Red Post
   layers:
   - Default
   - TransparentFX

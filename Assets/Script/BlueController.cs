@@ -13,6 +13,7 @@ public class BlueController : MonoBehaviour
     public int platformIndex;
     private Transform targetPlatform;
     private bool shouldMove = false;
+    public bool stop = false;
     float moveSpeed;
     public TMP_Text tmpText; // Reference to the TMP_Text component
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,35 +46,37 @@ public class BlueController : MonoBehaviour
             {
                 shouldMove = false;
             }
-
         }
     }
     public void Move()
     {
-        countBeforeMoving--;
-        tmpText.text = countBeforeMoving.ToString();
-        if (countBeforeMoving == 0)
+        if (!stop)
         {
-            spriteRenderer.enabled = true;
-            boxCol2d.enabled = true;
-            animator.enabled = true;
-            rb2d.gravityScale = 1f;
-        }
-        if (countBeforeMoving < 0)
-        {
-            if (platformController.move[indexMoving] == 0)
+            countBeforeMoving--;
+            tmpText.text = countBeforeMoving.ToString();
+            if (countBeforeMoving == 0)
             {
-                platformIndex--;
-                targetPlatform = platformController.platform[platformIndex];
-                shouldMove = true;
+                spriteRenderer.enabled = true;
+                boxCol2d.enabled = true;
+                animator.enabled = true;
+                rb2d.gravityScale = 1f;
             }
-            if (platformController.move[indexMoving] == 1)
+            if (countBeforeMoving < 0)
             {
-                platformIndex++;
-                targetPlatform = platformController.platform[platformIndex];
-                shouldMove = true;
+                if (platformController.move[indexMoving] == 0)
+                {
+                    platformIndex--;
+                    targetPlatform = platformController.platform[platformIndex];
+                    shouldMove = true;
+                }
+                if (platformController.move[indexMoving] == 1)
+                {
+                    platformIndex++;
+                    targetPlatform = platformController.platform[platformIndex];
+                    shouldMove = true;
+                }
+                indexMoving++;
             }
-            indexMoving++;
         }
     }
 
