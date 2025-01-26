@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlatformController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlatformController : MonoBehaviour
     private BlueController blueController;
     public Animator animator;
     private SoundManager soundManager;
+    public GameObject leftArrow;
+    public GameObject rightArrow;
+    public Transform content;      // The parent where the prefab should be instantiated
+    public int stepLimit;
+    public TMP_Text tmpText; // Reference to the TMP_Text component
 
     void Start()
     {
@@ -26,6 +32,7 @@ public class PlatformController : MonoBehaviour
         blueController = FindFirstObjectByType<BlueController>();
         animator.SetBool("isWalking", false);
         soundManager = FindFirstObjectByType<SoundManager>();
+        tmpText.text = stepLimit.ToString();
     }
 
     void Update()
@@ -48,6 +55,10 @@ public class PlatformController : MonoBehaviour
             if (Vector3.Distance(character.position, targetPlatform.position) < 0.1f)
             {
                 shouldMove = false;
+            }
+            if (stepLimit == 0)
+            {
+                GameOver();
             }
         }
 
@@ -77,19 +88,27 @@ public class PlatformController : MonoBehaviour
         }
     }
 
+    public void GameOver()
+    {
+        soundManager.GameOver();
+    }
     public void MoveToPlatformLeft()
     {
         if (platformIndexToStart > 0)
         {
+
             // Start walking animation
             animator.SetBool("isWalking", true);
             soundManager.Walk();
+            InstantiatePrefab(leftArrow);
 
             // Prepare for movement
             move.Add(0);
             platformIndexToStart--;
             targetPlatform = platform[platformIndexToStart];
             shouldMove = true;
+            stepLimit--;
+            tmpText.text = stepLimit.ToString();
         }
     }
 
@@ -100,15 +119,28 @@ public class PlatformController : MonoBehaviour
             // Start walking animation
             animator.SetBool("isWalking", true);
             soundManager.Walk();
+            InstantiatePrefab(rightArrow);
 
             // Prepare for movement
             move.Add(1);
             platformIndexToStart++;
             targetPlatform = platform[platformIndexToStart];
             shouldMove = true;
+            stepLimit--;
+            tmpText.text = stepLimit.ToString();
         }
     }
 
+    public void InstantiatePrefab(GameObject prefabToInstantiate)
+    {
+        // Instantiate the prefab as a child of the parent transform
+        GameObject newObject = Instantiate(prefabToInstantiate, content);
+
+        // Optionally, reset the local position/rotation/scale
+        newObject.transform.localPosition = Vector3.zero; // Position relative to the parent
+        newObject.transform.localRotation = Quaternion.identity; // Reset rotation
+        newObject.transform.localScale = Vector3.one; // Reset scale
+    }
     public void AfterTP(int index)
     {
         platformIndexToStart = index;

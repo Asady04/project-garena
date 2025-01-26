@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "project-garena-shed.sln"
+    "dotnet.defaultSolution": "project-garena.sln"
 }

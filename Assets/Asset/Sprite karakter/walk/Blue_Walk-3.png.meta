@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Blue_Walk-3_0: 4305420766731759272
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

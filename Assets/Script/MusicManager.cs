@@ -5,6 +5,7 @@ public class MusicManager : MonoBehaviour
 {
     private static MusicManager instance;  // Singleton instance
     private AudioSource audioSource;
+    private bool isMuted = false;
 
     [Header("Music Clips")]
     public AudioClip mainMenuMusic;  // Music for main menu scenes
@@ -27,6 +28,19 @@ public class MusicManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        isMuted = PlayerPrefs.GetInt("MusicMuted", 0) == 1;
+        audioSource.mute = isMuted;
+    }
+
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        audioSource.mute = isMuted;
+        PlayerPrefs.SetInt("MusicMuted", isMuted ? 1 : 0);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

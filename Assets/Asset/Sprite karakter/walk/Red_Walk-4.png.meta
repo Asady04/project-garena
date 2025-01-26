@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Red_Walk-4_0: 2144750412671776120
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,6 +3,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private AudioSource audioSource;
+    private bool isMuted = false;
 
     [Header("Sound Effects")]
     public AudioClip walk; // Assign your button click sound here
@@ -27,7 +28,18 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Persist across scenes
         audioSource = GetComponent<AudioSource>();
     }
+    void Start()
+    {
+        isMuted = PlayerPrefs.GetInt("MusicMuted", 0) == 1;
+        audioSource.mute = isMuted;
+    }
 
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        audioSource.mute = isMuted;
+        PlayerPrefs.SetInt("MusicMuted", isMuted ? 1 : 0);
+    }
     public void Walk()
     {
         if (walk != null)
@@ -35,56 +47,56 @@ public class SoundManager : MonoBehaviour
             audioSource.PlayOneShot(walk);
         }
     }
-     public void ButtonClick()
+    public void ButtonClick()
     {
         if (button != null)
         {
             audioSource.PlayOneShot(button);
         }
     }
-     public void GameOver()
+    public void GameOver()
     {
         if (gameOver != null)
         {
             audioSource.PlayOneShot(gameOver);
         }
     }
-     public void Collide()
+    public void Collide()
     {
         if (collide != null)
         {
             audioSource.PlayOneShot(collide);
         }
     }
-     public void Portal()
+    public void Portal()
     {
         if (portal != null)
         {
             audioSource.PlayOneShot(portal);
         }
     }
-     public void SwitchSound()
+    public void SwitchSound()
     {
         if (switchSound != null)
         {
             audioSource.PlayOneShot(switchSound);
         }
     }
-     public void StartButton()
+    public void StartButton()
     {
         if (startButton != null)
         {
             audioSource.PlayOneShot(startButton);
         }
     }
-     public void Trampoline()
+    public void Trampoline()
     {
         if (trampoline != null)
         {
             audioSource.PlayOneShot(trampoline);
         }
     }
-     public void Win()
+    public void Win()
     {
         if (win != null)
         {
