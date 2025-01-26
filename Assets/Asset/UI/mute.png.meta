@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: c6ae66e932f34cf418a25ab028c7926e
+guid: 5f37504c5601efd40adbcc31d77804fa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 144775311990115912
-    second: LeftArrow_0
+      213: -6423757755376941075
+    second: Sound mute (1)_0
+  - first:
+      213: 1227946209773596632
+    second: Sound mute (1)_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +142,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LeftArrow_0
+      name: Sound mute (1)_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 15
-        width: 98
-        height: 98
+        x: 0
+        y: 0
+        width: 119
+        height: 121
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +157,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 84eca631168520200800000000000000
-      internalID: 144775311990115912
+      spriteID: de7c8932b5a3ad6a0800000000000000
+      internalID: -6423757755376941075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sound mute (1)_1
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 31
+        width: 22
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dfa7d4629a8a0110800000000000000
+      internalID: 1227946209773596632
       vertices: []
       indices: 
       edges: []
@@ -174,7 +199,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LeftArrow_0: 144775311990115912
+      Sound mute (1)_0: -6423757755376941075
+      Sound mute (1)_1: 1227946209773596632
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

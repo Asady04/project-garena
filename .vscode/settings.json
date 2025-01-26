@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "project-garena-yoan.sln"
+    "dotnet.defaultSolution": "project-garena.sln"
 }
