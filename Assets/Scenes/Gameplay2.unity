@@ -1824,6 +1824,12 @@ MonoBehaviour:
   isInputEnabled: 1
   stop: 0
   move: 
+  animator: {fileID: 0}
+  leftArrow: {fileID: 0}
+  rightArrow: {fileID: 0}
+  content: {fileID: 0}
+  stepLimit: 0
+  tmpText: {fileID: 0}
 --- !u!4 &1045870298
 Transform:
   m_ObjectHideFlags: 0
