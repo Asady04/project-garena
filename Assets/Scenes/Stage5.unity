@@ -2756,6 +2756,9 @@ MonoBehaviour:
   content: {fileID: 140078068}
   stepLimit: 16
   tmpText: {fileID: 1149959444}
+  maxStepsToDisplay: 4
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 0.14117648, g: 0.454902, b: 0.86274517, a: 1}
 --- !u!4 &1045870298
 Transform:
   m_ObjectHideFlags: 0

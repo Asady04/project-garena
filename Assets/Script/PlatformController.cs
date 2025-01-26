@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlatformController : MonoBehaviour
@@ -24,6 +25,13 @@ public class PlatformController : MonoBehaviour
     public int stepLimit;
     public TMP_Text tmpText; // Reference to the TMP_Text component
 
+
+    private Queue<GameObject> displayedSteps = new Queue<GameObject>(); // Queue to manage displayed images
+    public int maxStepsToDisplay = 5; // Limit for the number of steps displayed
+    public Color defaultColor = Color.white; // Default color for images
+    public Color highlightColor = Color.yellow; // Highlight color for the most recent step
+
+    private GameObject lastHighlightedStep; // Reference to the last highlighted step
     void Start()
     {
         move = new List<int>();
@@ -133,13 +141,51 @@ public class PlatformController : MonoBehaviour
 
     public void InstantiatePrefab(GameObject prefabToInstantiate)
     {
-        // Instantiate the prefab as a child of the parent transform
+        // Instantiate prefab sebagai anak dari parent content
         GameObject newObject = Instantiate(prefabToInstantiate, content);
 
-        // Optionally, reset the local position/rotation/scale
-        newObject.transform.localPosition = Vector3.zero; // Position relative to the parent
-        newObject.transform.localRotation = Quaternion.identity; // Reset rotation
-        newObject.transform.localScale = Vector3.one; // Reset scale
+        // Reset posisi/rotasi/scale relatif ke parent
+        newObject.transform.localPosition = Vector3.zero;
+        newObject.transform.localRotation = Quaternion.identity;
+        newObject.transform.localScale = Vector3.one;
+
+        // Tambahkan ke queue langkah yang ditampilkan
+        displayedSteps.Enqueue(newObject);
+
+        // Jika langkah melebihi batas maksimum, hapus langkah tertua
+        if (displayedSteps.Count > maxStepsToDisplay)
+        {
+            GameObject oldestObject = displayedSteps.Dequeue();
+            Destroy(oldestObject);
+        }
+
+        // Update highlight untuk langkah ke-maxStepsToDisplay
+        UpdateHighlight();
+    }
+
+    private void UpdateHighlight()
+    {
+        // Hanya jalankan highlight jika langkah sudah mencapai maxStepsToDisplay
+        if (displayedSteps.Count >= maxStepsToDisplay)
+        {
+            // Reset warna untuk semua langkah
+            foreach (GameObject step in displayedSteps)
+            {
+                Image stepImage = step.GetComponent<Image>();
+                if (stepImage != null)
+                {
+                    stepImage.color = defaultColor; // Warna default untuk semua langkah
+                }
+            }
+
+            // Highlight langkah paling belakang (urutan pertama dalam queue)
+            GameObject lastStep = displayedSteps.Peek(); // Langkah paling belakang
+            Image lastStepImage = lastStep.GetComponent<Image>();
+            if (lastStepImage != null)
+            {
+                lastStepImage.color = highlightColor; // Highlight langkah terakhir
+            }
+        }
     }
     public void AfterTP(int index)
     {
