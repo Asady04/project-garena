@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
@@ -8,6 +9,7 @@ public class CharacterController : MonoBehaviour
     private PlatformController platformController;
     private BlueController blueController;
     public bool isBlue;
+    public bool inTP;
     private SoundManager soundManager;
 
     void Start()
@@ -25,6 +27,13 @@ public class CharacterController : MonoBehaviour
             hasTeleported = false;
         }
     }
+    void Update()
+    {
+        if (gameObject.transform.position.y < platformController.platform[0].position.y)
+        {
+            platformController.GameOver();
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Check for different tags
@@ -38,6 +47,7 @@ public class CharacterController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Portal") && !hasTeleported)
         {
+            inTP = true;
             var portal = collision.gameObject.GetComponent<PortalController>();
             if (portal != null && portal.destinationPortal != null)
             {
@@ -57,11 +67,32 @@ public class CharacterController : MonoBehaviour
             if (!isBlue && blueController.stop)
             {
                 platformController.stop = true;
-                soundManager.Win();
+                StartCoroutine(DelayToWin());
+
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (!inTP)
+            {
+                platformController.GameOver();
             }
         }
     }
+    IEnumerator DelayToWin()
+    {
+        // Wait for the specified delay time
+        yield return new WaitForSeconds(0.5f);
 
+        platformController.Win();
+    }
+    IEnumerator DelayToTP()
+    {
+        // Wait for the specified delay time
+        yield return new WaitForSeconds(3f);
+        inTP = false;
+    }
     void Jump(float jumpForce)
     {
         // Apply upward force for the jump
@@ -118,6 +149,7 @@ public class CharacterController : MonoBehaviour
 
             // Mark as teleported to prevent immediate re-teleportation
             hasTeleported = true;
+            StartCoroutine(DelayToTP());
         }
     }
     IEnumerator DelayBeforeCheck()

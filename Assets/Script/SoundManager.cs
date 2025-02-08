@@ -58,7 +58,7 @@ public class SoundManager : MonoBehaviour
     {
         if (gameOver != null)
         {
-            audioSource.PlayOneShot(gameOver);
+            audioSource.PlayOneShot(gameOver, Mathf.Clamp01(1.5f));
         }
     }
     public void Collide()

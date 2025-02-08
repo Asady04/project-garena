@@ -24,6 +24,7 @@ public class PlatformController : MonoBehaviour
     public Transform content;      // The parent where the prefab should be instantiated
     public int stepLimit;
     public TMP_Text tmpText; // Reference to the TMP_Text component
+    private WinController winController; // Reference to the TMP_Text component
 
 
     private Queue<GameObject> displayedSteps = new Queue<GameObject>(); // Queue to manage displayed images
@@ -38,6 +39,7 @@ public class PlatformController : MonoBehaviour
         targetPlatform = platform[platformIndexToStart];
         character.position = new Vector3(targetPlatform.position.x, character.position.y, character.position.z);
         blueController = FindFirstObjectByType<BlueController>();
+        winController = FindFirstObjectByType<WinController>();
         animator.SetBool("isWalking", false);
         soundManager = FindFirstObjectByType<SoundManager>();
         tmpText.text = stepLimit.ToString();
@@ -99,6 +101,12 @@ public class PlatformController : MonoBehaviour
     public void GameOver()
     {
         soundManager.GameOver();
+        winController.GameOver();
+    }
+    public void Win()
+    {
+        soundManager.Win();
+        winController.Win();
     }
     public void MoveToPlatformLeft()
     {
